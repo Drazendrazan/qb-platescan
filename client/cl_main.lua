@@ -1,6 +1,4 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local Player = nil
-local PlayerData = nil
 local PlayerJob = nil
 local lastVeh = nil
 local lastPlate = nil
@@ -34,28 +32,24 @@ end
 
 AddEventHandler('onResourceStart', function(resourceName)
     if GetCurrentResourceName() == resourceName then
-		Player = PlayerPedId()
-		PlayerData = QBCore.Functions.GetPlayerData()
+		local PlayerData = QBCore.Functions.GetPlayerData()
         PlayerJob = PlayerData.job
     end
 end)
 
 AddEventHandler('onResourceStop', function(resourceName)
     if GetCurrentResourceName() == resourceName then
-		Player = nil
-		PlayerData = nil
         PlayerJob = nil
     end
 end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-	Player = PlayerPedId()
-    PlayerData = QBCore.Functions.GetPlayerData()
+    local PlayerData = QBCore.Functions.GetPlayerData()
     PlayerJob = PlayerData.job
 end)
 
 RegisterNetEvent('QBCore:Client:OnJobUpdate', function(JobInfo)
-    PlayerData = QBCore.Functions.GetPlayerData()
+    local PlayerData = QBCore.Functions.GetPlayerData()
     PlayerJob = PlayerData.job
 end)
 
@@ -113,7 +107,8 @@ RegisterNetEvent("qb-platescan:client:ScanPlate", function(vData, cam, locked)
 end)
 
 RegisterCommand('+platescan', function()
-	if PlayerJob.name ~= "police" or not IsPedInAnyPoliceVehicle(Player) then return end
+	if PlayerJob.name ~= "police" then return end
+	if not IsPedInAnyPoliceVehicle(PlayerPedId()) then return end
 	if exports["qb-phone"]:IsPhoneOpen() or IsPauseMenuActive() or IsAimCamActive() then return end
 	local data, vData, vehicle = exports["wk_wars2x"]:GetFrontPlate(), {}
 	if data.veh ~= nil and data.veh ~= 0 then
