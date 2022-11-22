@@ -227,7 +227,6 @@ local Vehicle = nil
 
 local function GetFrontPlate()
 	local data = {
-		cam = "front",
 		locked = READER.vars.cams["front"].locked,
 		plate = READER.vars.cams["front"].plate,
 		veh = Vehicle,

@@ -72,7 +72,7 @@ end)
 RegisterNetEvent("qb-platescan:server:ScanPlate", function(data)
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
-	local veh, plate, name, class, cam, locked = data.veh, data.plate, data.name, data.class, data.cam, data.locked
+	local veh, plate, name, class, locked = data.veh, data.plate, data.name, data.class, data.locked
 	local vehData
 	if plate ~= "" and plate ~= nil then
 		local vehicle = MySQL.query.await("select pv.*, p.charinfo from player_vehicles pv LEFT JOIN players p ON pv.citizenid = p.citizenid WHERE pv.plate = :plate LIMIT 1", {
@@ -133,7 +133,7 @@ RegisterNetEvent("qb-platescan:server:ScanPlate", function(data)
 			end
 		end
 		if Config.Debug then print(json.encode(vehData)) end
-		TriggerClientEvent("qb-platescan:client:ScanPlate", src, vehData, cam, locked)
+		TriggerClientEvent("qb-platescan:client:ScanPlate", src, vehData, locked)
 	else
 		TriggerClientEvent('QBCore:Notify', src, Lang:t('error.readerdisabled'), 'error')
 	end

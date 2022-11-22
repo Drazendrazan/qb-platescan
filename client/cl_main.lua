@@ -71,7 +71,7 @@ RegisterNetEvent("qb-platescan:client:AddStolenPlate", function(veh, plate)
 	end
 end)
 
-RegisterNetEvent("qb-platescan:client:ScanPlate", function(vData, cam, locked)
+RegisterNetEvent("qb-platescan:client:ScanPlate", function(vData, locked)
 	local pData, scanStatus, plateStatus
 	local flagReason = {}
 	if Config.Debug then print(json.encode(vData)) end
@@ -82,7 +82,7 @@ RegisterNetEvent("qb-platescan:client:ScanPlate", function(vData, cam, locked)
 		if vData.stolen then table.insert(flagReason, Lang:t('info.status.stolen')) end
 		if vData.bolo then table.insert(flagReason, Lang:t('info.status.bolo')) end
 		if Config.LockOnFlag and not locked then
-			TriggerEvent("wk:togglePlateLock", cam, true, true)
+			TriggerEvent("wk:togglePlateLock", "front", true, true)
 		end
 	else
 		scanStatus = "good"
@@ -117,7 +117,6 @@ RegisterCommand('+platescan', function()
 		vehicle = vehicleData(data.veh)
 		vData = {
 			locked = data.locked,
-			cam = data.cam,
 			veh = data.veh,
 			plate = data.plate,
 			name = vehicle.name,
@@ -127,7 +126,6 @@ RegisterCommand('+platescan', function()
 		vehicle = vehicleData(lastVeh)
 		vData = {
 			locked = data.locked,
-			cam = data.cam,
 			veh = lastVeh,
 			plate = lastPlate,
 			name = vehicle.name,
