@@ -136,4 +136,4 @@ RegisterCommand('+platescan', function()
 	end
 	TriggerServerEvent("qb-platescan:server:ScanPlate", vData)
 end)
-RegisterKeyMapping('+platescan', 'Scan Plate (Police)', 'mouse', 'MOUSE_LEFT')
+RegisterKeyMapping('+platescan', 'Scan Plate (Police)', 'mouse_button', 'MOUSE_LEFT')
